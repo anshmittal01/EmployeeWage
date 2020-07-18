@@ -6,7 +6,7 @@ class EmployeeWage {
 		static int empSalary=0;
 		static final int partTime=0;
 		static final int fullTime=1;
-
+		static int workingDays=20;
 		static double getRandom(){
 			return Math.floor(Math.random() * 10) % 3;
 		}
@@ -33,12 +33,16 @@ class EmployeeWage {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Employee Wage Program");
 
-		double empPresent = getRandom();
-		
-		empHour = getEmployeeHours((int)empPresent);
+		for(int day=1;day<workingDays;day++)
+		{
+			double empPresent = getRandom();
+	
+			empHour = getEmployeeHours((int)empPresent);
 
-		empSalary=empRatePerHour*empHour;
-		
-		System.out.println("Salary is :" + empSalary);
+			empSalary=empRatePerHour*empHour;
+			
+			System.out.println("Salary is :" + empSalary);
+
+		}
 	}
 }
