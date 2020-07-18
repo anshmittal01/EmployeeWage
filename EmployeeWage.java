@@ -1,26 +1,41 @@
 import java.util.*;
 class EmployeeWage {
 
+		static int empHour=0;
+		static int empRatePerHour=20;
+		static int empSalary=0;
+		static final int partTime=0;
+		static final int fullTime=1;
+
+		static double getRandom(){
+			return Math.floor(Math.random() * 10) % 3;
+		}
+
+		static int getEmployeeHours(int empPresent){
+
+			int employeeHour=0;
+			switch(empPresent)
+			{
+				case partTime:
+								System.out.println("Employee is part time Present");
+								employeeHour=4;
+								break;
+				case fullTime:
+								System.out.println("Employee is full time Present");
+								employeeHour=8;
+								break;
+				default:
+								System.out.println("Employee is Absent");
+			}
+			return employeeHour;
+		}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to Employee Wage Program");
 
-		int empHour=0;
-		int empRatePerHour=20;
-		int empSalary=0;
-		int partTime=0;
-		int fullTime=1;
-
-		double empPresent = Math.floor(Math.random() * 10) % 2;
+		double empPresent = getRandom();
 		
-		if ( empPresent == partTime ){
-			System.out.println("Employee is part time Present");
-			empHour=4;
-		}
-		
-		if(empPresent == fullTime){
-			System.out.println("Employee is Absent");
-			empHour=8;
-		}
+		empHour = getEmployeeHours((int)empPresent);
 
 		empSalary=empRatePerHour*empHour;
 		
