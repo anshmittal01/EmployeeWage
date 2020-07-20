@@ -1,16 +1,21 @@
 import java.util.*;
 class EmployeeWage {
 
-		public static int empRatePerHour=20;
-		public static int workingDays=20;
-		public static int workingHours=100;
-		
 		public static final int partTime=0;
 		public static final int fullTime=1;
 		
-		private int empSalary=0;
-		private int empTotalWorkingDays=0;
-		private int empTotalWorkingHours=0;
+		private String companyName;
+		private int empRatePerHour;
+		private int workingDays;
+		private int workingHours;
+
+		EmployeeWage(String companyName, int empRatePerHour, int workingDays, int workingHours){
+			this.companyName=companyName;
+			this.empRatePerHour=empRatePerHour;
+			this.workingHours=workingHours;
+			this.workingDays=workingDays;
+		}
+
 
 		private double getRandom(){
 			return Math.floor(Math.random() * 10) % 3;
@@ -22,43 +27,50 @@ class EmployeeWage {
 			switch(empPresent)
 			{
 				case partTime:
-								employeeHour=4;
-								break;
+								return 4;
 				case fullTime:
-								employeeHour=8;
-								break;
+								return 8;
 				default:
+								return 0;
 			}
-			return employeeHour;
 		}
 
-		private void computeWage(){
-			System.out.println("Welcome to Employee Wage Program");
-			System.out.println("--------------------------------");
+		public void computeWage(){
+			int empSalary=0;
+			int empTotalWorkingDays=0;
+			int empTotalWorkingHours=0;
+
+			System.out.println("-----------------------------------------");
+			System.out.println("Welcome to Employee Wage Program of "+this.companyName);
+			System.out.println("-----------------------------------------");
 			System.out.println("day"+"\t\t"+"hours"+"\t"+"salary");
 			
 			while(empTotalWorkingDays<workingDays && empTotalWorkingHours<workingHours)
 			{
-				this.empTotalWorkingDays++;
+				empTotalWorkingDays++;
 
 				double empPresent = this.getRandom();
 		
 				int empHour = this.getEmployeeHours((int)empPresent);
 
-				this.empTotalWorkingHours+=empHour;
+				empTotalWorkingHours+=empHour;
 				
-				this.empSalary=this.empRatePerHour*this.empTotalWorkingHours;
-				System.out.println(this.empTotalWorkingDays+"\t\t"+this.empTotalWorkingHours+"\t\t"+this.empSalary);
+				empSalary=this.empRatePerHour*empTotalWorkingHours;
+				System.out.println(empTotalWorkingDays+"\t\t"+empTotalWorkingHours+"\t\t"+empSalary);
 				
 			}
 
 				System.out.println("--------------------------------");
-				System.out.println("Salary is :" + this.empSalary);
+				System.out.println("Salary is :" + empSalary+"\n\n\n");
 		}
 
 	public static void main(String[] args) {
-		EmployeeWage employeeWage = new EmployeeWage();
-		employeeWage.computeWage();
+		EmployeeWage ril = new EmployeeWage("RIL",20,20,100);
+		EmployeeWage amazon = new EmployeeWage("AMAZON",20,20,100);
+		EmployeeWage adobe = new EmployeeWage("ADOBE",20,20,100);
+		ril.computeWage();
+		amazon.computeWage();
+		adobe.computeWage();
 		
 	}
 }
