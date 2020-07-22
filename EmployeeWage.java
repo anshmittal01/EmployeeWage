@@ -71,14 +71,18 @@ class EmployeeWage {
 
 		public static final int partTime=0;
 		public static final int fullTime=1;
-		ArrayList<CompanyEmployeeWage> companyEmployeeWage ;
+		ArrayList<CompanyEmployeeWage> companyEmployeeWageArray ;
+		HashMap<String,CompanyEmployeeWage> totalWageMap;
 
 		public EmployeeWage(){
-				companyEmployeeWage = new ArrayList<CompanyEmployeeWage>();
+				companyEmployeeWageArray = new ArrayList<CompanyEmployeeWage>();
+				totalWageMap = new HashMap<String,CompanyEmployeeWage>(); 
 		}
 	
 		private void addCompany(String company, int empRatePerHr, int maxHrsPerMonth, int numWorkingDays){
-			companyEmployeeWage.add(new CompanyEmployeeWage(company,empRatePerHr,maxHrsPerMonth,numWorkingDays));
+			CompanyEmployeeWage companyEmployeeWage = new CompanyEmployeeWage(company,empRatePerHr,maxHrsPerMonth,numWorkingDays);
+			companyEmployeeWageArray.add(companyEmployeeWage);
+			totalWageMap.put(company,companyEmployeeWage);
 		}
 
 		private double getRandom(){
@@ -99,11 +103,17 @@ class EmployeeWage {
 		}
 
 		public void computeWageForAll(){
-			for(CompanyEmployeeWage emp:companyEmployeeWage){
+			for(CompanyEmployeeWage emp:companyEmployeeWageArray){
 				int totalWage = this.computeWage(emp);
 				emp.setTotalWage(totalWage);
 			}
 		}
+
+		public void getTotalWage(String companyName)
+		{
+			System.out.println("Total Wage for "+companyName+" is:- "+totalWageMap.get(companyName).getTotalWage());
+		}
+
 
 		public int computeWage(CompanyEmployeeWage employeeWage){
 			int empSalary=0;
@@ -143,5 +153,7 @@ class EmployeeWage {
 		employeeWage.addCompany("ADOBE",20,20,100);
 		
 		employeeWage.computeWageForAll();
+
+		employeeWage.getTotalWage("RIL");
 	}
 }
