@@ -6,12 +6,14 @@ class CompanyEmployeeWage{
     private int workingDays;
     private int workingHours;
     private int totalWage;
+    private ArrayList<Integer> dailyWage;
 
     CompanyEmployeeWage(String companyName, int empRatePerHour, int workingDays, int workingHours){
         this.companyName=companyName;
         this.empRatePerHour=empRatePerHour;
         this.workingHours=workingHours;
         this.workingDays=workingDays;
+        this.dailyWage=new ArrayList<Integer>();
     }
 
     public String getCompanyName() {
@@ -53,6 +55,16 @@ class CompanyEmployeeWage{
     public void setTotalWage(int totalWage) {
         this.totalWage = totalWage;
     }
+
+    public void addToDailyWage(int employeeWage)
+	{
+		this.dailyWage.add(employeeWage);
+	}
+
+	public ArrayList<Integer> getDailyWage()
+	{
+		return this.dailyWage;
+	}
 }
 
 class EmployeeWage {
@@ -114,6 +126,7 @@ class EmployeeWage {
 				empTotalWorkingHours+=empHour;
 				
 				empSalary=employeeWage.getEmpRatePerHour()*empTotalWorkingHours;
+				employeeWage.addToDailyWage(empHour*employeeWage.getEmpRatePerHour());
 				System.out.println(empTotalWorkingDays+"\t\t"+empTotalWorkingHours+"\t\t"+empSalary);
 				
 			}
