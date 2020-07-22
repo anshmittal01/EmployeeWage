@@ -35,7 +35,7 @@ class EmployeeWage {
 			}
 		}
 
-		public void computeWage(){
+		public int computeWage(){
 			int empSalary=0;
 			int empTotalWorkingDays=0;
 			int empTotalWorkingHours=0;
@@ -62,15 +62,23 @@ class EmployeeWage {
 
 				System.out.println("--------------------------------");
 				System.out.println("Salary is :" + empSalary+"\n\n\n");
+			return empSalary;
 		}
 
 	public static void main(String[] args) {
 		EmployeeWage ril = new EmployeeWage("RIL",20,20,100);
 		EmployeeWage amazon = new EmployeeWage("AMAZON",20,20,100);
 		EmployeeWage adobe = new EmployeeWage("ADOBE",20,20,100);
-		ril.computeWage();
-		amazon.computeWage();
-		adobe.computeWage();
 		
+		HashMap<String,Integer> totalEmployeeWage = new HashMap<>();
+		totalEmployeeWage.put(ril.companyName,ril.computeWage());
+		totalEmployeeWage.put(amazon.companyName,amazon.computeWage());
+		totalEmployeeWage.put(adobe.companyName,adobe.computeWage());
+
+		for (Map.Entry wage : totalEmployeeWage.entrySet())
+  			System.out.printf("%10s - %d\n", wage.getKey(),wage.getValue()); 
+	
+
+
 	}
 }
