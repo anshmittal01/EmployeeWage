@@ -1,21 +1,73 @@
 import java.util.*;
+class CompanyEmployeeWage{
+
+    private String companyName;
+    private int empRatePerHour;
+    private int workingDays;
+    private int workingHours;
+    private int totalWage;
+
+    CompanyEmployeeWage(String companyName, int empRatePerHour, int workingDays, int workingHours){
+        this.companyName=companyName;
+        this.empRatePerHour=empRatePerHour;
+        this.workingHours=workingHours;
+        this.workingDays=workingDays;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public int getEmpRatePerHour() {
+        return empRatePerHour;
+    }
+
+    public void setEmpRatePerHour(int empRatePerHour) {
+        this.empRatePerHour = empRatePerHour;
+    }
+
+    public int getWorkingDays() {
+        return workingDays;
+    }
+
+    public void setWorkingDays(int workingDays) {
+        this.workingDays = workingDays;
+    }
+
+    public int getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(int workingHours) {
+        this.workingHours = workingHours;
+    }
+
+    public int getTotalWage() {
+        return totalWage;
+    }
+
+    public void setTotalWage(int totalWage) {
+        this.totalWage = totalWage;
+    }
+}
+
 class EmployeeWage {
 
 		public static final int partTime=0;
 		public static final int fullTime=1;
-		
-		private String companyName;
-		private int empRatePerHour;
-		private int workingDays;
-		private int workingHours;
+		ArrayList<CompanyEmployeeWage> companyEmployeeWage ;
 
-		EmployeeWage(String companyName, int empRatePerHour, int workingDays, int workingHours){
-			this.companyName=companyName;
-			this.empRatePerHour=empRatePerHour;
-			this.workingHours=workingHours;
-			this.workingDays=workingDays;
+		public EmployeeWage(){
+				companyEmployeeWage = new ArrayList<CompanyEmployeeWage>();
 		}
-
+	
+		private void addCompany(String company, int empRatePerHr, int maxHrsPerMonth, int numWorkingDays){
+			companyEmployeeWage.add(new CompanyEmployeeWage(company,empRatePerHr,maxHrsPerMonth,numWorkingDays));
+		}
 
 		private double getRandom(){
 			return Math.floor(Math.random() * 10) % 3;
@@ -23,7 +75,6 @@ class EmployeeWage {
 
 		private int getEmployeeHours(int empPresent){
 
-			int employeeHour=0;
 			switch(empPresent)
 			{
 				case partTime:
@@ -35,17 +86,24 @@ class EmployeeWage {
 			}
 		}
 
-		public int computeWage(){
+		public void computeWageForAll(){
+			for(CompanyEmployeeWage emp:companyEmployeeWage){
+				int totalWage = this.computeWage(emp);
+				emp.setTotalWage(totalWage);
+			}
+		}
+
+		public int computeWage(CompanyEmployeeWage employeeWage){
 			int empSalary=0;
 			int empTotalWorkingDays=0;
 			int empTotalWorkingHours=0;
 
 			System.out.println("-----------------------------------------");
-			System.out.println("Welcome to Employee Wage Program of "+this.companyName);
+			System.out.println("Welcome to Employee Wage Program of "+employeeWage.getCompanyName());
 			System.out.println("-----------------------------------------");
 			System.out.println("day"+"\t\t"+"hours"+"\t"+"salary");
 			
-			while(empTotalWorkingDays<workingDays && empTotalWorkingHours<workingHours)
+			while(empTotalWorkingDays<employeeWage.getWorkingDays() && empTotalWorkingHours<employeeWage.getWorkingHours())
 			{
 				empTotalWorkingDays++;
 
@@ -55,7 +113,7 @@ class EmployeeWage {
 
 				empTotalWorkingHours+=empHour;
 				
-				empSalary=this.empRatePerHour*empTotalWorkingHours;
+				empSalary=employeeWage.getEmpRatePerHour()*empTotalWorkingHours;
 				System.out.println(empTotalWorkingDays+"\t\t"+empTotalWorkingHours+"\t\t"+empSalary);
 				
 			}
@@ -66,19 +124,11 @@ class EmployeeWage {
 		}
 
 	public static void main(String[] args) {
-		EmployeeWage ril = new EmployeeWage("RIL",20,20,100);
-		EmployeeWage amazon = new EmployeeWage("AMAZON",20,20,100);
-		EmployeeWage adobe = new EmployeeWage("ADOBE",20,20,100);
+		EmployeeWage employeeWage = new EmployeeWage();
+		employeeWage.addCompany("RIL",20,20,100);
+		employeeWage.addCompany("AMAZON",20,20,100);
+		employeeWage.addCompany("ADOBE",20,20,100);
 		
-		HashMap<String,Integer> totalEmployeeWage = new HashMap<>();
-		totalEmployeeWage.put(ril.companyName,ril.computeWage());
-		totalEmployeeWage.put(amazon.companyName,amazon.computeWage());
-		totalEmployeeWage.put(adobe.companyName,adobe.computeWage());
-
-		for (Map.Entry wage : totalEmployeeWage.entrySet())
-  			System.out.printf("%10s - %d\n", wage.getKey(),wage.getValue()); 
-	
-
-
+		employeeWage.computeWageForAll();
 	}
 }
